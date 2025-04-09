@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { CustomersProps, type BreadcrumbItem } from '@/types';
+import { Head, usePage } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -8,30 +8,22 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/customers',
     },
 ];
-const stats = [
-    { id: 1, name: 'Transactions every 24 hours', value: 'Cliente 1' },
-    { id: 2, name: 'Assets under holding', value: 'Cliente 2' },
-    { id: 3, name: 'New users annually', value: 'Cliente 3' },
-];
 
 export default function Index() {
+    const { customers } = usePage<CustomersProps>().props;
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Clientes" />
+            {/* contenedor principal   */}
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                {/* contenido  */}
-                <div className="bg-white py-24 sm:py-32">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <dl className="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-                            {stats.map((stat) => (
-                                <div key={stat.id} className="mx-auto flex max-w-xs flex-col gap-y-4">
-                                    <dt className="text-base/7 text-gray-600">{stat.name}</dt>
-                                    <dd className="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{stat.value}</dd>
-                                </div>
-                            ))}
-                        </dl>
-                    </div>
-                </div>
+                <ul>
+                    {customers.data.map((customer) => (
+                        <li key={customer.id} className="border-b border-gray-200 py-2">
+                            {customer.name} - {customer.email} {customer.name}
+                        </li>
+                    ))}
+                </ul>
             </div>
         </AppLayout>
     );

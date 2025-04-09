@@ -40,3 +40,25 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+// intrfaces para el proyecto
+
+export interface Customer {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+}
+
+export interface CustomersProps {
+    customers: {
+        data: Customer[];
+        meta: {
+            current_page: number;
+            last_page: number;
+            total: number;
+        };
+    };
+    [key: string]: unknown;
+}
