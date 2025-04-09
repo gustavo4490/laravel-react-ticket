@@ -22,7 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('customers', CustomerController::class);
-    Route::resource('support', SupportController::class);
+    Route::resource('supports', SupportController::class);
     Route::resource('tickets', TicketController::class);
 });
 
