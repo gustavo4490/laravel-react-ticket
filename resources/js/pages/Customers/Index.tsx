@@ -1,7 +1,10 @@
-import { DataTable } from '@/components/ui/dataTable';
+import { Button } from '@/components/ui/button';
+import { DataTablePro } from '@/components/ui/dataTablePro';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import AppLayout from '@/layouts/app-layout';
 import { CustomersProps, type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
+import { MoreHorizontal } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -41,7 +44,27 @@ export default function Index() {
             <Head title="Clientes" />
             {/* contenedor principal   */}
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <DataTable columns={columns} data={customers.data} />
+                <DataTablePro
+                    columns={columns}
+                    data={customers.data}
+                    filterColumn="name"
+                    filterPlaceholder="Buscar por nombre"
+                    rowActions={(row) => (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="h-8 w-8 p-0">
+                                    <span className="sr-only">Abrir menú</span>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => console.log('Ver', row)}>Ver</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => console.log('Editar', row)}>Editar</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => console.log('Eliminar', row)}>Eliminar</DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
+                />
             </div>
         </AppLayout>
     );
