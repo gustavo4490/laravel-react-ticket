@@ -2,8 +2,8 @@ import { Button } from '@/components/ui/button';
 import { DataTablePro } from '@/components/ui/dataTablePro';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import AppLayout from '@/layouts/app-layout';
-import { CustomersProps, type BreadcrumbItem } from '@/types';
-import { Head, usePage } from '@inertiajs/react';
+import { PageProps, type BreadcrumbItem } from '@/types';
+import { Head, router, usePage } from '@inertiajs/react';
 import { MoreHorizontal } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -37,7 +37,13 @@ const columns = [
 ];
 
 export default function Index() {
-    const { customers } = usePage<CustomersProps>().props;
+    const { customers } = usePage<PageProps>().props;
+
+    const handelPageChange = (url: string | null) => {
+        if (url) {
+            router.get(url);
+        }
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -47,6 +53,13 @@ export default function Index() {
                 <DataTablePro
                     columns={columns}
                     data={customers.data}
+                    pagination={{
+                        from: customers.from,
+                        to: customers.to,
+                        total: customers.total,
+                        links: customers.links,
+                        onPageChange: handelPageChange,
+                    }}
                     filterColumn="name"
                     filterPlaceholder="Buscar por nombre"
                     rowActions={(row) => (

@@ -51,14 +51,38 @@ export interface Customer {
     address: string;
 }
 
-export interface CustomersProps {
-    customers: {
-        data: Customer[];
-        meta: {
-            current_page: number;
-            last_page: number;
-            total: number;
-        };
-    };
+// export interface CustomersProps {
+//     customers: {
+//         data: Customer[];
+//         meta: {
+//             current_page: number;
+//             last_page: number;
+//             total: number;
+//         };
+//     };
+//     [key: string]: unknown;
+// }
+
+//para la paginacion
+
+export interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+export interface paginatedData<T> {
+    data: T[];
+    current_page: number;
+    from: number;
+    to: number;
+    total: number;
+    per_page: number;
+    last_page: number;
+    links: PaginationLink[];
+}
+
+export interface PageProps {
+    customers: paginatedData<Customer>;
     [key: string]: unknown;
 }
