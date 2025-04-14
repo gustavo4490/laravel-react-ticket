@@ -34,28 +34,18 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:customers,email',
+            'phone' => 'required|string|max:15',
+            'address' => 'nullable|string|max:255',
+        ]);
 
-        try {
+        Customer::create($validated);
 
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:customers,email',
-                'phone' => 'required|string|max:15',
-                'address' => 'nullable|string|max:255',
-            ]);
-            // Crear un nuevo cliente en la base de datos con los datos validados.
-
-            Customer::create($validated);
-
-            // Redirigir al usuario a la lista de clientes con un mensaje de éxito.
-            return redirect()
-                ->route('customers.index')
-                ->with('success', 'Customer created successfully.');
-        } catch (\Exception $e) {
-            return redirect()
-                ->back()
-                ->with(['error' => 'Failed to create customer.' . $e->getMessage()]);
-        }
+        return redirect()
+            ->route('customers.index')
+            ->with('success', 'Customer created successfully.');
     }
 
     /**
