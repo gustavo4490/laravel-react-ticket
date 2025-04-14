@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -32,20 +33,13 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:customers,email',
-            'phone' => 'required|string|max:15',
-            'address' => 'nullable|string|max:255',
-        ]);
-
-        Customer::create($validated);
+        Customer::create($request->validated());
 
         return redirect()
             ->route('customers.index')
-            ->with('success', 'Customer created successfully.');
+            ->with('success', 'Cliente creado exitosamente.');
     }
 
     /**
