@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { DataTablePro } from '@/components/ui/dataTablePro';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import AppLayout from '@/layouts/app-layout';
 import { PageProps, type BreadcrumbItem } from '@/types';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { MoreHorizontal, UserPlus } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
+import { AlertDialogCustommer } from './delete/AlertDialogCustommer';
+import {SheetDemo} from './edit/sheetEdit'
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -52,6 +53,7 @@ export default function Index() {
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex items-center justify-between">
                     <h1>Clientes</h1>
+
                     <Link href='customers/create'>
                         <Button className='cursor-pointer' >
                             <UserPlus className="mr-2 h-4 w-4" />
@@ -71,20 +73,13 @@ export default function Index() {
                     }}
                     filterColumn="name"
                     filterPlaceholder="Buscar por nombre"
-                    rowActions={(row) => (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                    <span className="sr-only">Abrir menú</span>
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={() => console.log('Ver', row)}>Ver</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => console.log('Editar', row)}>Editar</DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => console.log('Eliminar', row)}>Eliminar</DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                    rowActions={() => (
+                            <>
+                            {/* <EditDialog /> */}
+                            <SheetDemo/>
+                            <AlertDialogCustommer /> 
+                            </>
+                        
                     )}
                 />
             </div>
