@@ -78,7 +78,6 @@ function Create() {
                             <Input
                                 id="email"
                                 name="email"
-                                autoFocus
                                 value={data.email}
                                 onChange={(e) => setData('email', e.target.value)}
                                 disabled={processing}
@@ -93,7 +92,6 @@ function Create() {
                             <Input
                                 id="phone"
                                 name="phone"
-                                autoFocus
                                 value={data.phone}
                                 onChange={(e) => setData('phone', allowOnlyNumbers(e.target.value))}
                                 disabled={processing}
